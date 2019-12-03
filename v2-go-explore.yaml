@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-explore-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: explore
+ template:
+  metadata:
+   labels:
+    component: explore
+  spec:
+   containers:
+    - name: v2-go-explore
+      image: tericai/v2_go_explore
+      env:
+       - name: RABBIT_MQ_HOST
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_USER
+         value: zest
+       - name: RABBIT_MQ_PASSWORD
+         value: iot
+       - name: EXPLORE_DB_HOST
+         value: 54.169.103.232:27019
+       - name: EXPLORE_DB_NAME
+         value: ms_explore
+       - name: LICENSE_SERVER
+         value: http://localhost:8081
+       - name: DEBUG_MODE
+         value: '3'

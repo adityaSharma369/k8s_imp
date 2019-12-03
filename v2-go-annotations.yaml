@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-annotations-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: annotations
+ template:
+  metadata:
+   labels:
+    component: annotations
+  spec:
+   containers:
+    - name: v2-go-annotation
+      image: tericai/v2_go_annotation
+      env:
+       - name: RABBIT_MQ_HOST
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_PASSWORD
+         value: zest
+       - name: RABBIT_MQ_USER
+         value: iot
+      #  - name: RABBIT_MQ_PORT
+      #    value: '5672'
+       - name: PROJECT_DB_HOST
+         value: 54.169.103.232:27019
+       - name: PROJECT_DB_NAME
+         value: ms_project
+       - name: ANNOTATION_DB_HOST
+         value: 54.169.103.232:27019
+       - name: ANNOTATION_DB_NAME
+         value: ms_annotation
+       - name: LICENSE_SERVER
+         value: http://localhost:8081
+       - name: DEBUG_MODE
+         value: '3' 

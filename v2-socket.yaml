@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-socket-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: socket
+ template:
+  metadata:
+   labels:
+    component: socket
+  spec:
+   containers:
+    - name: v2-go-socket
+      image: tericai/v2_go_socket
+      ports:
+       - containerPort: 8080
+      env:
+       - name: RABBIT_MQ_HOST
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_USER
+         value: zest
+       - name: RABBIT_MQ_PASSWORD
+         value: iot
+       - name: LICENSE_SERVER
+         value: http://52.74.93.83:8081
+       - name: DEBUG_MODE
+         value: '3'

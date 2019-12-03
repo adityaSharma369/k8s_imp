@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-user-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: user
+ template:
+  metadata:
+   labels:
+    component: user
+  spec:
+   containers:
+    - name: v2-go-user
+      image: tericai/v2_go_user
+      env: 
+      - name: RABBIT_MQ_HOST
+        value: 54.169.103.232:5672
+      - name: RABBIT_MQ_USER
+        value: zest
+      - name: RABBIT_MQ_PASSWORD
+        value: iot
+      - name: USER_DB_HOST
+        value: 54.169.103.232:27019
+      - name: USER_DB_NAME
+        value: ms_user
+      - name: JWT_SECRET
+        value: tericsoft
+      - name: LICENSE_SERVER
+        value: http://52.74.93.83:8081
+      - name: DEBUG_MODE
+        value: '3'
+      - name: DEFAULT_USER
+        value: manager@tericsoft.com

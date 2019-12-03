@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-gateway-node-deployment
+spec:
+ replicas: 3  
+ selector:
+  matchLabels:
+   component: gateway
+ template:
+  metadata:
+   labels:
+    component: gateway
+  spec:
+   containers:
+    - name: v2-gateway-node
+      image: tericai/v2_gateway_node
+      command: ["nodemon","server.js"]
+      ports:
+       - containerPort: 3500
+      env:
+       - name: RABBIT_MQ_HOST
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_USER
+         value: zest
+       - name: RABBIT_MQ_PASSWORD
+         value: iot
+       - name: LICENSE_SERVER
+         value: http://52.74.93.83:8081
+       - name: DEBUG_MODE
+         value: '3'
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: v2-gateway-node-clusterip
+spec:
+ type: NodePort
+ selector:
+  component: gateway
+ ports:
+  - port: 3500
+    targetPort: 3000
+    nodePort: 31234
+    

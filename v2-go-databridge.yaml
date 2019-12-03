@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-databridge-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: databridge
+ template:
+  metadata:
+   labels:
+    component: databridge
+  spec:
+   containers:
+    - name: v2-go-databridge
+      image: tericai/v2_go_databridge
+      env:
+       - name: RABBIT_MQ_HOST
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_USER
+         value: zest
+       - name: RABBIT_MQ_PASSWORD
+         value: iot
+       - name: DATASET_DB_HOST
+         value: 54.169.103.232:27019
+       - name: DATASET_DB_NAME
+         value: ms_dataset
+       - name: LICENSE_SERVER
+         value: http://52.74.93.83:8081
+       - name: DEFAULT_DATASOURCE_ID
+         value: 5d4d9738532e40002c316f67
+       - name: DEFAULT_CREDENTIAL_ID
+         value: 5d8087d92456b2006b5c0dcc
+       - name: DEFAULT_S3_ACCESS_SECRET
+         value: jRj/3N+kwJLQzHQ13Tex21qWYsDGcKJJ12sCvV1f
+       - name: DEFAULT_S3_ACCESS_ID
+         value: AKIAIBOP2D3OSXTIGIJA
+       - name: DEFAULT_S3_BUCKET_NAME
+         value: dev-teric.ai
+       - name: DEFAULT_S3_FILTER_PATH
+         value: 
+       - name: DEFAULT_S3_REGION
+         value: ap-south-1
+       - name: GATEWAY_URL
+         value: http://54.169.103.232:3500
+       - name: DEBUG_MODE
+         value: '3' 

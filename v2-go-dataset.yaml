@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: v2-go-dataset-deployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   component: dataset
+ template:
+  metadata:
+   labels:
+    component: dataset
+  spec:
+   containers:
+    - name: v2-go-dataset
+      image: tericai/v2_go_dataset
+      env:
+       - name: RABBIT_MQ_HOST 
+         value: 54.169.103.232:5672
+       - name: RABBIT_MQ_USER
+         value: zest
+       - name: RABBIT_MQ_PASSWORD
+         value: iot
+       - name: DATASET_DB_HOST
+         value: 54.169.103.232:27019
+       - name: DATASET_DB_NAME
+         value: ms_dataset
+       - name: LICENSE_SERVER
+         value: http://52.74.93.83:8081
+       - name: DEBUG_MODE
+         value: '3'
+       - name: DATASET_THUMBNAIL_SIZE
+         value: '200' # PUSH TO UI when 200 thumbnail is generated
+       - name: GATEWAY_URL
+         value: http://54.169.103.232:3500
+       - name: DEFAULT_DATASOURCE_ID
+         value: 5d4d9738532e40002c316f67
